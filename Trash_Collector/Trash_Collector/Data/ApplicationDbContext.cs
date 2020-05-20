@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Trash_Collector.Models;
 
 namespace Trash_Collector.Data
 {
@@ -13,6 +14,8 @@ namespace Trash_Collector.Data
             : base(options)
         {
         }
+
+        public DbSet<Customer> Customers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
