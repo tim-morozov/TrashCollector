@@ -25,6 +25,7 @@ namespace Trash_Collector.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
+
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
@@ -73,8 +74,7 @@ namespace Trash_Collector.Areas.Identity.Pages.Account
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            var roles = _roleManager.Roles;
-            Roles = new SelectList(roles, "Name", "Name");
+            var roles = _roleManager.Roles; Roles = new SelectList(roles, "Name", "Name");
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -87,9 +87,9 @@ namespace Trash_Collector.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    if(await _roleManager.RoleExistsAsync(Input.Role))
-                    {
-                        await _userManager.AddToRoleAsync(user, Input.Role);
+                    if (await _roleManager.RoleExistsAsync(Input.Role))
+                    { 
+                        await _userManager.AddToRoleAsync(user, Input.Role); 
                     }
                     _logger.LogInformation("User created a new account with password.");
 

@@ -11,9 +11,9 @@ namespace Trash_Collector.Models
     {
         [Key]
         public int Id { get; set; }
-        
+        public string Day { get; set; }
         [ForeignKey("Customer")]
-        public string CustomerAdress { get; set; }
-        public Customer Address { get; set; }
+        public int CustomerId { get; set; }
+        public Customer Customer { get; set; }
     }
 }

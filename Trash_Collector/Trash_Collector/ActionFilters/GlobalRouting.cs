@@ -10,27 +10,29 @@ namespace Trash_Collector.ActionFilters
 {
     public class GlobalRouting : IActionFilter
     {
-        private readonly ClaimsPrincipal _claimsPrincipal;
-        public GlobalRouting(ClaimsPrincipal claimsPrincipal)
+        private readonly ClaimsPrincipal _claimsPrincipal; 
+        public GlobalRouting(ClaimsPrincipal claimsPrincipal) 
         {
             _claimsPrincipal = claimsPrincipal;
         }
+
+
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            
+            throw new NotImplementedException();
         }
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
             var controller = context.RouteData.Values["controller"];
-            if(controller.Equals("Home"))
-            {
-                if(_claimsPrincipal.IsInRole("Customer"))
-                {
+            if (controller.Equals("Home")) 
+            { 
+                if (_claimsPrincipal.IsInRole("Customer")) 
+                { 
                     context.Result = new RedirectToActionResult("Index", "Customers", null);
-                }
-                else if(_claimsPrincipal.IsInRole("Employee"))
-                {
+                } 
+                else if (_claimsPrincipal.IsInRole("Employee")) 
+                { 
                     context.Result = new RedirectToActionResult("Index", "Employees", null);
                 }
             }

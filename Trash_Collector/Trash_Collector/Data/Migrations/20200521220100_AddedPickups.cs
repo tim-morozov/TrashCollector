@@ -2,29 +2,19 @@
 
 namespace Trash_Collector.Data.Migrations
 {
-    public partial class AddingPickupModel : Migration
+    public partial class AddedPickups : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "33375689-b5c5-4a41-950f-ddd33b977626");
+                keyValue: "dbb7d062-b414-4d09-aa09-b50bae2835c2");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "9d608606-e9d4-4f60-8510-066934c6c77b");
-
-            migrationBuilder.AddColumn<string>(
-                name: "Address",
-                table: "Customers",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "PickupDay",
-                table: "Customers",
-                nullable: true);
+                keyValue: "fd8bbf16-e22c-4aea-a395-744304e366c5");
 
             migrationBuilder.CreateTable(
                 name: "Pickups",
@@ -32,34 +22,34 @@ namespace Trash_Collector.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerAdress = table.Column<string>(nullable: true),
-                    AddressId = table.Column<int>(nullable: true)
+                    Day = table.Column<string>(nullable: true),
+                    CustomerId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pickups", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pickups_Customers_AddressId",
-                        column: x => x.AddressId,
+                        name: "FK_Pickups_Customers_CustomerId",
+                        column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "78f1fa99-e4f6-4b4b-b193-5eca656244aa", "27a27374-6b09-4b4f-9ec9-2cb906c204ca", "Customer", "CUSTOMER" });
+                values: new object[] { "2007f454-f159-43d5-9700-f35183d36a15", "f4e69104-da92-42c6-ab88-4bc17b0cb337", "Customer", "CUSTOMER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "99c13e2c-0227-4822-b167-9894d0f0d591", "b10f9677-026c-4408-93ef-c47f5848fae9", "Employee", "EMPLOYEE" });
+                values: new object[] { "43f237cf-06ed-48e6-8b62-7ac9098d57c2", "4cda8f70-1522-4075-bbb6-942be91e3619", "Employee", "EMPLOYEE" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pickups_AddressId",
+                name: "IX_Pickups_CustomerId",
                 table: "Pickups",
-                column: "AddressId");
+                column: "CustomerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -70,30 +60,22 @@ namespace Trash_Collector.Data.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "78f1fa99-e4f6-4b4b-b193-5eca656244aa");
+                keyValue: "2007f454-f159-43d5-9700-f35183d36a15");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "99c13e2c-0227-4822-b167-9894d0f0d591");
-
-            migrationBuilder.DropColumn(
-                name: "Address",
-                table: "Customers");
-
-            migrationBuilder.DropColumn(
-                name: "PickupDay",
-                table: "Customers");
+                keyValue: "43f237cf-06ed-48e6-8b62-7ac9098d57c2");
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "33375689-b5c5-4a41-950f-ddd33b977626", "5d3f5b18-5d6c-4508-8f36-a7a58ff04e86", "Customer", "CUSTOMER" });
+                values: new object[] { "fd8bbf16-e22c-4aea-a395-744304e366c5", "a0ebf4c9-a46a-4c8e-9036-1a548c16f1db", "Customer", "CUSTOMER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "9d608606-e9d4-4f60-8510-066934c6c77b", "07812a4d-6495-45ee-9295-ad834ee0f680", "Employee", "EMPLOYEE" });
+                values: new object[] { "dbb7d062-b414-4d09-aa09-b50bae2835c2", "d1e104fb-fc22-45ea-b3e8-b186270e5411", "Employee", "EMPLOYEE" });
         }
     }
 }

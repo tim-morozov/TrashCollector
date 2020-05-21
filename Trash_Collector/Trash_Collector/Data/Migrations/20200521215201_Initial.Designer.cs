@@ -10,8 +10,8 @@ using Trash_Collector.Data;
 namespace Trash_Collector.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200520205120_AddingCustomerModel")]
-    partial class AddingCustomerModel
+    [Migration("20200521215201_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,15 +50,15 @@ namespace Trash_Collector.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "120bea15-5727-479a-a38b-5e76e26351cd",
-                            ConcurrencyStamp = "cc07312b-9f5b-4db2-af3e-fe05b5de5c3d",
+                            Id = "94d78cc5-cf06-44ad-9fde-4b9e17dc82ec",
+                            ConcurrencyStamp = "17f4b564-5643-42c0-8664-e1e52b86f9ee",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "fee877d4-f7f0-4dd6-beee-f47c8a123b07",
-                            ConcurrencyStamp = "f1dd3359-d350-47bd-8bc5-0b599ecbb8d3",
+                            Id = "b55458ea-bf3b-4a30-8463-9efbf04eddd0",
+                            ConcurrencyStamp = "ca5da8cb-70fb-4309-9d58-4c232c9aa45b",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -253,6 +253,26 @@ namespace Trash_Collector.Data.Migrations
                     b.ToTable("Customers");
                 });
 
+            modelBuilder.Entity("Trash_Collector.Models.Employee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("IdentityUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdentityUserId");
+
+                    b.ToTable("Employees");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -305,6 +325,13 @@ namespace Trash_Collector.Data.Migrations
                 });
 
             modelBuilder.Entity("Trash_Collector.Models.Customer", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("IdentityUserId");
+                });
+
+            modelBuilder.Entity("Trash_Collector.Models.Employee", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()

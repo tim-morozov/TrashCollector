@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UserSecretsId>aspnet-Trash_Collector-228A7533-C71A-4FA9-8D7F-5630E81CD6F4</UserSecretsId>
+    <UserSecretsId>aspnet-Trash_Collector-42067BC8-3D6B-4EF5-B1EA-55D097E4B5FE</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

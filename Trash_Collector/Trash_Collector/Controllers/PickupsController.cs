@@ -22,7 +22,8 @@ namespace Trash_Collector.Controllers
         // GET: Pickups
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Pickups.ToListAsync());
+            var applicationDbContext = _context.Pickups.Include(p => p.Customer);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Pickups/Details/5
@@ -34,6 +35,7 @@ namespace Trash_Collector.Controllers
             }
 
             var pickup = await _context.Pickups
+                .Include(p => p.Customer)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (pickup == null)
             {
@@ -46,6 +48,7 @@ namespace Trash_Collector.Controllers
         // GET: Pickups/Create
         public IActionResult Create()
         {
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id");
             return View();
         }
 
@@ -54,7 +57,7 @@ namespace Trash_Collector.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CustomerAdress")] Pickup pickup)
+        public async Task<IActionResult> Create([Bind("Id,Day,CustomerId")] Pickup pickup)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +65,7 @@ namespace Trash_Collector.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id", pickup.CustomerId);
             return View(pickup);
         }
 
@@ -78,6 +82,7 @@ namespace Trash_Collector.Controllers
             {
                 return NotFound();
             }
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id", pickup.CustomerId);
             return View(pickup);
         }
 
@@ -86,7 +91,7 @@ namespace Trash_Collector.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CustomerAdress")] Pickup pickup)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Day,CustomerId")] Pickup pickup)
         {
             if (id != pickup.Id)
             {
@@ -113,6 +118,7 @@ namespace Trash_Collector.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id", pickup.CustomerId);
             return View(pickup);
         }
 
@@ -125,6 +131,7 @@ namespace Trash_Collector.Controllers
             }
 
             var pickup = await _context.Pickups
+                .Include(p => p.Customer)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (pickup == null)
             {

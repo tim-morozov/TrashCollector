@@ -14,7 +14,6 @@ namespace Trash_Collector.Data
             : base(options)
         {
         }
-
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Pickup> Pickups { get; set; }
@@ -22,17 +21,8 @@ namespace Trash_Collector.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<IdentityRole>().HasData(new IdentityRole 
-            {
-                Name = "Customer", 
-                NormalizedName = "CUSTOMER" 
-            });
-
-            builder.Entity<IdentityRole>().HasData(new IdentityRole
-            {
-                Name = "Employee",
-                NormalizedName = "EMPLOYEE"
-            });
+            builder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Customer", NormalizedName = "CUSTOMER" });
+            builder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Employee", NormalizedName = "EMPLOYEE" });
         }
     }
 }
