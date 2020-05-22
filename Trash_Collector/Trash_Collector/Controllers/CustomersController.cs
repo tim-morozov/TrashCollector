@@ -12,7 +12,7 @@ using Trash_Collector.Models;
 
 namespace Trash_Collector.Controllers
 {
-    [ServiceFilter(typeof(GlobalRouting))]
+    
     public class CustomersController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -76,14 +76,15 @@ namespace Trash_Collector.Controllers
         }
 
         // GET: Customers/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult  Edit(int? id)
         {
+            
             if (id == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customers.FindAsync(id);
+            var customer =  _context.Customers.Where(c => c.Id == id).SingleOrDefault();
             if (customer == null)
             {
                 return NotFound();
