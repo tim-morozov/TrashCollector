@@ -74,14 +74,14 @@ namespace Trash_Collector.Controllers
         }
 
         // GET: Employees/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var employee = await _context.Employees.FindAsync(id);
+            var employee = _context.Employees.Where(e => e.Id == id).SingleOrDefault();
             if (employee == null)
             {
                 return NotFound();
