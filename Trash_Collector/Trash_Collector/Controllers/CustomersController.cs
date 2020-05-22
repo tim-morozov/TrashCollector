@@ -38,7 +38,7 @@ namespace Trash_Collector.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers
+            var customer = _context.Customers.Where(c => c.Id == id)
                 .Include(c => c.IdentityUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (customer == null)
@@ -52,8 +52,8 @@ namespace Trash_Collector.Controllers
         // GET: Customers/Create
         public IActionResult Create()
         {
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id");
-            return View();
+            Customer customer = new Customer();
+            return View(customer);
         }
 
         // POST: Customers/Create
@@ -61,12 +61,14 @@ namespace Trash_Collector.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,ZipCode,IdentityUserId")] Customer customer)
+        public  IActionResult Create([Bind("Id,Name,ZipCode,IdentityUserId")] Customer customer)
         {
             if (ModelState.IsValid)
             {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                customer.IdentityUserId = userId;
                 _context.Add(customer);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", customer.IdentityUserId);
