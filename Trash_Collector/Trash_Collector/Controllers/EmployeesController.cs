@@ -161,5 +161,10 @@ namespace Trash_Collector.Controllers
         {
             return _context.Employees.Any(e => e.Id == id);
         }
+
+        //public IActionResult ConfirmPickup(int id)
+        //{
+        //    var customer = _context.Customers.Where(c => c.Id == id);
+        //}
     }
 }
