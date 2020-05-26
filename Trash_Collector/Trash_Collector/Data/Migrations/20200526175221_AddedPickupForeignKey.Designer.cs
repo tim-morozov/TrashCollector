@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Trash_Collector.Data;
 
 namespace Trash_Collector.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200526175221_AddedPickupForeignKey")]
+    partial class AddedPickupForeignKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,15 +50,15 @@ namespace Trash_Collector.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "af8144e2-0dfb-4063-af1d-18d4e92bbf01",
-                            ConcurrencyStamp = "239a7b48-158f-4979-926d-3ae8e9c23d6e",
+                            Id = "ef1a5dc6-a076-414f-8a8d-4d1d630852a4",
+                            ConcurrencyStamp = "936a52ad-c737-4513-b957-1c3a1a5c8dca",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "18829b75-9164-4f97-9411-3c92d96b0cc4",
-                            ConcurrencyStamp = "8af12d08-e382-4235-a367-84e9817809d9",
+                            Id = "af2d4263-7585-4ce7-a6a3-307fb70e9d3f",
+                            ConcurrencyStamp = "bba85949-fb97-4edf-a0ca-34373354f7b7",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -247,6 +249,9 @@ namespace Trash_Collector.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PickupId")
+                        .HasColumnType("int");
+
                     b.Property<string>("StreetAddress")
                         .HasColumnType("nvarchar(max)");
 
@@ -256,6 +261,8 @@ namespace Trash_Collector.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IdentityUserId");
+
+                    b.HasIndex("PickupId");
 
                     b.ToTable("Customers");
                 });
@@ -362,6 +369,12 @@ namespace Trash_Collector.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()
                         .HasForeignKey("IdentityUserId");
+
+                    b.HasOne("Trash_Collector.Models.Pickup", "Pickup")
+                        .WithMany()
+                        .HasForeignKey("PickupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Trash_Collector.Models.Employee", b =>

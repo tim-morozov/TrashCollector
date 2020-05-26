@@ -19,5 +19,6 @@ namespace Trash_Collector.Models
         [ForeignKey("IdentityUser")]
         public string IdentityUserId { get; set; }
         public IdentityUser IdentityUser { get; set; }
+        
     }
 }

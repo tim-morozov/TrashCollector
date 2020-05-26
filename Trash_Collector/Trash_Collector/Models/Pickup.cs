@@ -12,6 +12,7 @@ namespace Trash_Collector.Models
         [Key]
         public int Id { get; set; }
         public string Day { get; set; }
+        public bool IsPickedUp { get; set; }
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
