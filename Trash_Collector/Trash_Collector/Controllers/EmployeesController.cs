@@ -26,7 +26,7 @@ namespace Trash_Collector.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var employee = _context.Employees.Where(e => e.IdentityUserId == userId).SingleOrDefault();
             var pickups = _context.Pickups.Where(p => p.Customer.ZipCode == employee.ZipCode);
-            return View(employee);
+            return View(pickups);
         }
 
         // GET: Employees/Details/5
