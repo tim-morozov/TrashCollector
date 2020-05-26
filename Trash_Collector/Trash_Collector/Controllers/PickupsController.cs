@@ -20,10 +20,11 @@ namespace Trash_Collector.Controllers
         }
 
         // GET: Pickups
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var applicationDbContext = _context.Pickups.Include(p => p.Customer);
-            return View(await applicationDbContext.ToListAsync());
+            var pickup = _context.Pickups;
+            return View(pickup);
+           
         }
 
         // GET: Pickups/Details/5
