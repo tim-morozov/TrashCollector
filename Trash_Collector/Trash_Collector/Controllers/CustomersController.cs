@@ -26,8 +26,9 @@ namespace Trash_Collector.Controllers
         public IActionResult Index()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var customer = _context.Customers.Where(c => c.IdentityUserId == userId).SingleOrDefault();
-            if (customer.Name == null)
+            var customer = _context.Customers.Where(c => c.IdentityUserId == userId).FirstOrDefault();
+
+            if(customer == null)
             {
                 return View("Create");
             }
@@ -35,10 +36,12 @@ namespace Trash_Collector.Controllers
             {
                 return View(customer);
             }
+                
+            
         }
 
         // GET: Customers/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public  IActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -47,7 +50,7 @@ namespace Trash_Collector.Controllers
 
             var customer = _context.Customers.Where(c => c.Id == id)
                 .Include(c => c.IdentityUser)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefault(m => m.Id == id);
             if (customer == null)
             {
                 return NotFound();
@@ -68,13 +71,13 @@ namespace Trash_Collector.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public  IActionResult Create([Bind("Id,Name,ZipCode,IdentityUserId")] Customer customer)
+        public  IActionResult Create([Bind("Id,Name,ZipCode,StreetAdress,IdentityUserId")] Customer customer)
         {
             if (ModelState.IsValid)
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 customer.IdentityUserId = userId;
-                _context.Add(customer);
+                _context.Customers.Add(customer);
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
@@ -105,7 +108,7 @@ namespace Trash_Collector.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ZipCode,IdentityUserId")] Customer customer)
+        public IActionResult Edit(int id, [Bind("Id,Name,ZipCode,StreetAddress,IdentityUserId")] Customer customer)
         {
             if (id != customer.Id)
             {
@@ -116,8 +119,8 @@ namespace Trash_Collector.Controllers
             {
                 try
                 {
-                    _context.Update(customer);
-                    await _context.SaveChangesAsync();
+                    _context.Customers.Update(customer);
+                     _context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
