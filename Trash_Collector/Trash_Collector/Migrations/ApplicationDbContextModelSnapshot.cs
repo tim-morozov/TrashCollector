@@ -3,21 +3,19 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Trash_Collector.Data;
 
-namespace Trash_Collector.Data.Migrations
+namespace Trash_Collector.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200521220100_AddedPickups")]
-    partial class AddedPickups
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.3")
+                .HasAnnotation("ProductVersion", "3.1.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -50,15 +48,15 @@ namespace Trash_Collector.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2007f454-f159-43d5-9700-f35183d36a15",
-                            ConcurrencyStamp = "f4e69104-da92-42c6-ab88-4bc17b0cb337",
+                            Id = "f33a50d1-8c2f-4947-a0b5-94eac59a2953",
+                            ConcurrencyStamp = "81b74250-3c27-4878-9895-37414097ee72",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "43f237cf-06ed-48e6-8b62-7ac9098d57c2",
-                            ConcurrencyStamp = "4cda8f70-1522-4075-bbb6-942be91e3619",
+                            Id = "163827ae-2b1e-4307-82de-1cac26704669",
+                            ConcurrencyStamp = "e23b7cac-065b-45f7-8ec2-ecef8af6edc3",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -240,10 +238,16 @@ namespace Trash_Collector.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<double>("Balance")
+                        .HasColumnType("float");
+
                     b.Property<string>("IdentityUserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreetAddress")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ZipCode")
@@ -291,6 +295,9 @@ namespace Trash_Collector.Data.Migrations
 
                     b.Property<string>("Day")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsPickedUp")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

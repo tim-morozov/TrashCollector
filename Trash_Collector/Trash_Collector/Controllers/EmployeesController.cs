@@ -25,8 +25,12 @@ namespace Trash_Collector.Controllers
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var employee = _context.Employees.Where(e => e.IdentityUserId == userId).SingleOrDefault();
-            var pickups = _context.Pickups.Where(p => p.Customer.ZipCode == employee.ZipCode).ToList();
-            return View(pickups);
+           // var pickups = _context.Pickups.Where(p => p.Customer.ZipCode == employee.ZipCode).ToList();
+           //if(pickups == null)
+           // {
+           //     return NotFound();
+           // }
+            return View(employee);
         }
 
         // GET: Employees/Details/5
