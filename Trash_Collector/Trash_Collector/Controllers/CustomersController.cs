@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -36,7 +35,7 @@ namespace Trash_Collector.Controllers
             else
             {
                 return View(customer);
-            }                        
+            }                              
         }
 
         // GET: Customers/Details/5
@@ -77,13 +76,10 @@ namespace Trash_Collector.Controllers
             if (ModelState.IsValid)
             {
                 Pickup p = new Pickup();
-
-
                 customer.Pickup = p;
-                _context.Pickups.Add(p);
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 customer.IdentityUserId = userId;
-                customer.PickUpId = p.Id;
+                _context.Pickups.Add(p);
                 _context.Customers.Add(customer);
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
@@ -119,6 +115,8 @@ namespace Trash_Collector.Controllers
         {
             //Customer customerFromDB = _context.Customers.Where(c => c.Id == customer.Id).FirstOrDefault();
             //customerFromDB.Name = customer.Name;
+            var pickup = _context.Pickups.Where(p => p.Id == customer.PickUpId).FirstOrDefault();
+            pickup.Day = customer.Pickup.Day;
 
             if (id != customer.Id)
             {

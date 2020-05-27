@@ -14,13 +14,13 @@
         <form asp-action="AddOneTime">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-           
+
             <div class="form-group">
                 <label asp-for="OneTime" class="control-label"></label>
-                <input asp-for="OneTime" type="datetime" class="form-control" />
+                <input asp-for="OneTime" class="form-control" />
                 <span asp-validation-for="OneTime" class="text-danger"></span>
             </div>
-            
+
         </form>
     </div>
 </div>
