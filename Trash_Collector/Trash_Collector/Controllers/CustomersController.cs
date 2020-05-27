@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -189,10 +190,12 @@ namespace Trash_Collector.Controllers
             return View(customer);
         }
 
-        //[HttpPost]
-        //public IActionResult AddOneTime(Customer customer)
-        //{
-        //    customer.OneTime
-        //}
+        [HttpPost]
+        public IActionResult AddOneTime(Customer customer)
+        {
+            _context.Customers.Update(customer);
+            _context.SaveChanges();
+           return RedirectToAction("Index");
+        }
     }
 }

@@ -13,9 +13,12 @@ namespace Trash_Collector.Models
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
+        [Display(Name="Zip Code")]
         public int ZipCode { get; set; }
+        [Display(Name="Street Address")]
         public string StreetAddress { get; set; }
         public double Balance { get; set; }
+        [Display(Name ="One-Time Pickup")]
         public DateTime? OneTime { get; set; }
       
         [ForeignKey("IdentityUser")]
