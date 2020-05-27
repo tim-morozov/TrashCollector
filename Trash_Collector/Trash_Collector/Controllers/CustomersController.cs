@@ -27,7 +27,14 @@ namespace Trash_Collector.Controllers
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var customer = _context.Customers.Where(c => c.IdentityUserId == userId).SingleOrDefault();
-            return View(customer);
+            if (customer.Name == null)
+            {
+                return View("Create");
+            }
+            else
+            {
+                return View(customer);
+            }
         }
 
         // GET: Customers/Details/5
