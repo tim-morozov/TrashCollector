@@ -10,7 +10,7 @@ using Trash_Collector.Data;
 namespace Trash_Collector.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200527145949_Initial")]
+    [Migration("20200527171840_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,15 +50,15 @@ namespace Trash_Collector.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f33a50d1-8c2f-4947-a0b5-94eac59a2953",
-                            ConcurrencyStamp = "81b74250-3c27-4878-9895-37414097ee72",
+                            Id = "2363387f-c75d-43f0-9a0a-2057a35508a8",
+                            ConcurrencyStamp = "7bae86c5-6899-4029-b88e-3a525d4a834a",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "163827ae-2b1e-4307-82de-1cac26704669",
-                            ConcurrencyStamp = "e23b7cac-065b-45f7-8ec2-ecef8af6edc3",
+                            Id = "330f436a-fd46-4819-8776-5c01dd953256",
+                            ConcurrencyStamp = "cde0b473-568a-4c82-9918-e6793b78a404",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -249,6 +249,9 @@ namespace Trash_Collector.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PickUpId")
+                        .HasColumnType("int");
+
                     b.Property<string>("StreetAddress")
                         .HasColumnType("nvarchar(max)");
 
@@ -258,6 +261,8 @@ namespace Trash_Collector.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IdentityUserId");
+
+                    b.HasIndex("PickUpId");
 
                     b.ToTable("Customers");
                 });
@@ -292,9 +297,6 @@ namespace Trash_Collector.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Day")
                         .HasColumnType("nvarchar(max)");
 
@@ -302,8 +304,6 @@ namespace Trash_Collector.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
 
                     b.ToTable("Pickups");
                 });
@@ -364,6 +364,12 @@ namespace Trash_Collector.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()
                         .HasForeignKey("IdentityUserId");
+
+                    b.HasOne("Trash_Collector.Models.Pickup", "Pickup")
+                        .WithMany()
+                        .HasForeignKey("PickUpId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Trash_Collector.Models.Employee", b =>
@@ -371,15 +377,6 @@ namespace Trash_Collector.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()
                         .HasForeignKey("IdentityUserId");
-                });
-
-            modelBuilder.Entity("Trash_Collector.Models.Pickup", b =>
-                {
-                    b.HasOne("Trash_Collector.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
