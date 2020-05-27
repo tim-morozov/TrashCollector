@@ -25,19 +25,16 @@ namespace Trash_Collector.Controllers
         // GET: Customers
         public IActionResult Index()
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var customer = _context.Customers.Where(c => c.IdentityUserId == userId).FirstOrDefault();
-
-            if(customer == null)
+            try
             {
-                return View("Create");
-            }
-            else
-            {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var customer = _context.Customers.Where(c => c.IdentityUserId == userId).FirstOrDefault();
                 return View(customer);
             }
-                
-            
+           catch
+            {
+                return View("Create");
+            }            
         }
 
         // GET: Customers/Details/5

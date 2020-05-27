@@ -31,13 +31,23 @@
             </div>
             <div class="form-group">
                 <label asp-for="Balance" class="control-label"></label>
-                <input asp-for="Balance" type="hidden" class="form-control" />
+                <input asp-for="Balance" class="form-control" />
                 <span asp-validation-for="Balance" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="OneTime" class="control-label"></label>
+                <input asp-for="OneTime" class="form-control" />
+                <span asp-validation-for="OneTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="IdentityUserId" class="control-label"></label>
-                <input asp-for="IdentityUserId" type="hidden" class="form-control" asp-items="ViewBag.IdentityUserId"></input>
+                <select asp-for="IdentityUserId" class="form-control" asp-items="ViewBag.IdentityUserId"></select>
                 <span asp-validation-for="IdentityUserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PickUpId" class="control-label"></label>
+                <select asp-for="PickUpId" class="form-control" asp-items="ViewBag.PickUpId"></select>
+                <span asp-validation-for="PickUpId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

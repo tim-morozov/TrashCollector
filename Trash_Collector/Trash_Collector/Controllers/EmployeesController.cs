@@ -23,14 +23,19 @@ namespace Trash_Collector.Controllers
         // GET: Employees
         public IActionResult Index()
         {
+            
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var employee = _context.Employees.Where(e => e.IdentityUserId == userId).SingleOrDefault();
-           // var pickups = _context.Pickups.Where(p => p.Customer.ZipCode == employee.ZipCode).ToList();
-           //if(pickups == null)
-           // {
-           //     return NotFound();
-           // }
-            return View(employee);
+            var employee = _context.Employees.Where(e => e.IdentityUserId == userId).FirstOrDefault();
+            if(employee.Name == null)
+            {
+                return View("Create");
+            }
+            else
+            {
+                var pickups = _context.Customers.Where(p => p.ZipCode == employee.ZipCode).ToList();
+                return View(pickups);
+            }
+            
         }
 
         // GET: Employees/Details/5

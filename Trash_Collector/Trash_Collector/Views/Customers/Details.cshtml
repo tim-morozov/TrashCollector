@@ -36,10 +36,22 @@
             @Html.DisplayFor(model => model.Balance)
         </dd>
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.OneTime)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.OneTime)
+        </dd>
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.IdentityUser)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.IdentityUser.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Pickup.Day)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Pickup.Day)
         </dd>
     </dl>
 </div>
