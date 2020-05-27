@@ -25,16 +25,17 @@ namespace Trash_Collector.Controllers
         // GET: Customers
         public IActionResult Index()
         {
-            try
-            {
+           
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var customer = _context.Customers.Where(c => c.IdentityUserId == userId).FirstOrDefault();
-                return View(customer);
-            }
-           catch
+            if(customer == null)
             {
                 return View("Create");
-            }            
+            }
+            else
+            {
+                return View(customer);
+            }                        
         }
 
         // GET: Customers/Details/5
@@ -48,6 +49,8 @@ namespace Trash_Collector.Controllers
             var customer = _context.Customers.Where(c => c.Id == id)
                 .Include(c => c.IdentityUser)
                 .FirstOrDefault(m => m.Id == id);
+
+           
             if (customer == null)
             {
                 return NotFound();
@@ -68,12 +71,18 @@ namespace Trash_Collector.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public  IActionResult Create([Bind("Id,Name,ZipCode,StreetAdress,IdentityUserId")] Customer customer)
+        public  IActionResult Create( Customer customer)
         {
             if (ModelState.IsValid)
             {
+                Pickup p = new Pickup();
+
+
+                customer.Pickup = p;
+                _context.Pickups.Add(p);
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 customer.IdentityUserId = userId;
+                customer.PickUpId = p.Id;
                 _context.Customers.Add(customer);
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
@@ -105,8 +114,11 @@ namespace Trash_Collector.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("Id,Name,ZipCode,StreetAddress,IdentityUserId")] Customer customer)
+        public IActionResult Edit(int id, Customer customer)
         {
+            //Customer customerFromDB = _context.Customers.Where(c => c.Id == customer.Id).FirstOrDefault();
+            //customerFromDB.Name = customer.Name;
+
             if (id != customer.Id)
             {
                 return NotFound();
@@ -170,5 +182,17 @@ namespace Trash_Collector.Controllers
         {
             return _context.Customers.Any(e => e.Id == id);
         }
+
+        public IActionResult AddOneTime(int id)
+        {
+            var customer = _context.Customers.Where(c => c.Id == id).FirstOrDefault();
+            return View(customer);
+        }
+
+        //[HttpPost]
+        //public IActionResult AddOneTime(Customer customer)
+        //{
+        //    customer.OneTime
+        //}
     }
 }

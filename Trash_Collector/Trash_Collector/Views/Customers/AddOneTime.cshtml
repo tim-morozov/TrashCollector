@@ -1,18 +1,19 @@
 ﻿@model Trash_Collector.Models.Customer
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "AddOneTime";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>AddOneTime</h1>
 
 <h4>Customer</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="AddOneTime">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -28,23 +29,28 @@
                 <input asp-for="StreetAddress" class="form-control" />
                 <span asp-validation-for="StreetAddress" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <label asp-for="Pickup.Day" class="control-label">Pickup Day</label>
-                <select asp-for="Pickup.Day" name="Day">
-                    <option asp-for="Pickup.Day" value="Monday" class="form-control">Monday</option>
-                    <option asp-for="Pickup.Day" value="Tuesday" class="form-control">Tuesday</option>
-                    <option asp-for="Pickup.Day" value="Wednesday" class="form-control">Wednesday</option>
-                    <option asp-for="Pickup.Day" value="Thursday" class="form-control">Thursday</option>
-                    <option asp-for="Pickup.Day" value="Friday" class="form-control">Friday</option>
-                    <option asp-for="Pickup.Day" value="Saturday" class="form-control">Saturday</option>
-                    <option asp-for="Pickup.Day" value="Sunday" class="form-control">Sunday</option>
-                </select>
-                <span asp-validation-for="Pickup.Day" class="text-danger"></span>
+                <label asp-for="Balance" class="control-label"></label>
+                <input asp-for="Balance" class="form-control" />
+                <span asp-validation-for="Balance" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <label asp-for="OneTime" class="control-label"></label>
+                <input asp-for="OneTime" class="form-control" />
+                <span asp-validation-for="OneTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdentityUserId" class="control-label"></label>
+                <select asp-for="IdentityUserId" class="form-control" asp-items="ViewBag.IdentityUserId"></select>
+                <span asp-validation-for="IdentityUserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PickUpId" class="control-label"></label>
+                <select asp-for="PickUpId" class="form-control" asp-items="ViewBag.PickUpId"></select>
+                <span asp-validation-for="PickUpId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
