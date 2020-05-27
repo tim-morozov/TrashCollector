@@ -47,10 +47,13 @@ namespace Trash_Collector.Controllers
         }
 
         // GET: Pickups/Create
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
+            var customer = _context.Customers.Where(c => c.Id == id).FirstOrDefault();
+            Pickup pickup = new Pickup();
+            pickup.Customer = customer;
             ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id");
-            return View();
+            return View(pickup);
         }
 
         // POST: Pickups/Create
@@ -58,11 +61,11 @@ namespace Trash_Collector.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Day,CustomerId")] Pickup pickup)
+        public async Task<IActionResult> Create([Bind("Id,Day,Customer,CustomerId")] Pickup pickup)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(pickup);
+                _context.Pickups.Add(pickup);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
